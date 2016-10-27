@@ -15,14 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::group(['prefix'=>'api'],function(){
-
-    Route::resource('car', 'CarController');
-
+Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function(){
+    Route::resource('book', 'BookController');
 });
 
+Route::group(['middleware' => 'web'], function (){
+    Route::auth();
 
-Route::auth();
-
-Route::get('/home', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
+});
